@@ -1,8 +1,9 @@
-/* Personal Finance Planner service worker d2c127adc490 (generated) */
-const VERSION = "d2c127adc490";
+/* Personal Finance Planner service worker cde2f7d84b36 (generated) */
+const VERSION = "cde2f7d84b36";
 const CACHE = 'pf-shell-' + VERSION;
-const ASSETS = ["./","./assets/index-BFGCaj6T.js","./assets/index-Ckfecvwc.css","./assets/sql-wasm-Bku9E_kW.wasm","./icons/apple-touch-icon.png","./icons/icon-192.png","./icons/icon-512.png","./icons/maskable-512.png","./index.html","./manifest.webmanifest"];
-self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS.map((a) => new Request(a, { cache: 'reload' }))))); });
+const ASSETS = ["./","./assets/index-Ckfecvwc.css","./assets/index-hPz4oRxg.js","./assets/sql-wasm-Bku9E_kW.wasm","./icons/apple-touch-icon.png","./icons/icon-192.png","./icons/icon-512.png","./icons/maskable-512.png","./index.html","./manifest.webmanifest"];
+// skipWaiting only after every app file is cached. Pages decide when to reload (locked screens reload at once; an unlocked session is never interrupted).
+self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS.map((a) => new Request(a, { cache: 'reload' })))).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => { e.waitUntil((async () => { for (const k of await caches.keys()) if (k.startsWith('pf-shell-') && k !== CACHE) await caches.delete(k); await self.clients.claim(); })()); });
 self.addEventListener('message', (e) => { if (e.data === 'SKIP_WAITING') self.skipWaiting(); if (e.data === 'VERSION') e.source && e.source.postMessage({ version: VERSION }); });
 self.addEventListener('fetch', (e) => {
